@@ -4,8 +4,8 @@ using System.IO;
 namespace Ex1
 {
     class FarManager
-    {
-        public int cursor; 
+    { //global variables
+        public int cursor;  
         public string path; 
         public int sz;
         public bool ok;
@@ -21,12 +21,12 @@ namespace Ex1
         {
             this.path = path; //to set value of path
             cursor = 0; //our cursor is in the beginning of the list of directories
-            directory = new DirectoryInfo(path); 
+            directory = new DirectoryInfo(path); //get path of current directory
             sz = directory.GetFileSystemInfos().Length; //sz is equal to quantity of directories
-            ok = true;
+            ok = true; 
         }
 
-        public void Color(FileSystemInfo fs, int index)
+        public void Color(FileSystemInfo fs, int index) 
         {
             if (cursor == index) //condition to color the chosen directory whereas cursor is equal to numeration index
             {
@@ -57,14 +57,14 @@ namespace Ex1
             FileSystemInfo[] fs = directory.GetFileSystemInfos();
             FileSystemInfo[] curfs = directory.GetFileSystemInfos();
             int pos = 0;
-            int tt = 1;
+            int tt = 1; //first variable to get numeration is equal to 1 
             for (int i = 0; i < curfs.Length; ++i) //loop through the array 
             {
-                if (ok == false && curfs[i].Name[0] == '.')
+                if (ok == false && curfs[i].Name[0] == '.') //it shows not hidden directories
                 {
                     continue;
                 }
-                if (curfs[i] is DirectoryInfo)
+                if (curfs[i] is DirectoryInfo) //shows only directory first
                 {
                     fs[pos++] = curfs[i];
                 }
@@ -75,7 +75,7 @@ namespace Ex1
                 {
                     continue;
                 }
-                if (curfs[i] is FileInfo)
+                if (curfs[i] is FileInfo)//shows only files first
                 {
                     fs[pos++] = curfs[i];
                 }
@@ -91,9 +91,9 @@ namespace Ex1
                 if (fs[i] is DirectoryInfo)
                 {
                     string ss = Convert.ToString(tt);
-                    Color(fs[i], i);
-                    Console.WriteLine(ss + ". " + fs[i].Name);
-                    tt++;
+                    Color(fs[i], i);//changes colour of directories  according to their type
+                    Console.WriteLine(ss + ". " + fs[i].Name); //show names of directories 
+                    tt++; // numeration
 
                 }
             }
@@ -107,10 +107,10 @@ namespace Ex1
                 if (fs[i] is FileInfo)
                 {
                     string ss = Convert.ToString(tt);
-                    Color(fs[i], i);
-                    Console.WriteLine(ss + ". " + fs[i].Name);
-                    tt++;
-                    //so numeration is written, then we start to control in the given directory by deleting, renaming and etc.
+                    Color(fs[i], i); //changes colour of files  according to their type
+                    Console.WriteLine(ss + ". " + fs[i].Name); //show names of files 
+                    tt++; //with numeration
+                    //so directories and files are shown with numeration, then we start to control in the given directory by deleting, renaming and etc.
                 }
             }
 
@@ -119,7 +119,7 @@ namespace Ex1
 
         public void Delete() //function to delete directories
         {
-            for (int i = 0; i < directory.GetFileSystemInfos().Length; i++)
+            for (int i = 0; i < directory.GetFileSystemInfos().Length; i++) //loop through the directories and files
             {
                 if (cursor == i) //if the file is chosen
                 {
@@ -130,7 +130,7 @@ namespace Ex1
                     }
                     catch (Exception ex) //Exception
                     {
-                        Console.Write("Cannot get an access"); 
+                        Console.Write("Cannot get an access"); //shows message
                         Console.ReadKey();
                     }
                 }
@@ -142,7 +142,7 @@ namespace Ex1
             FileInfo fileinf = new FileInfo(path);
 
 
-            Console.Clear();
+            Console.Clear(); 
             try
             {
                 using (StreamReader reader = new StreamReader(@"" + fileinf.FullName + "" + @"\" + directory.GetFileSystemInfos()[cursor]))
@@ -180,11 +180,21 @@ namespace Ex1
             FileSystemInfo fn = directory.GetFileSystemInfos()[cursor];
             if (fn is DirectoryInfo)
             {
-                Console.WriteLine("Set name for " + fileinf.FullName + @"\" + directory.GetFileSystemInfos()[cursor]);
-                string str = Console.ReadLine();
-                string old_name = @"" + fileinf.FullName + @"\" + directory.GetFileSystemInfos()[cursor];//get the name of file
-                string new_name = @"" + fileinf.FullName + @"\" + str;//get the adjusted name 
-                Directory.Move(old_name, new_name);//changes the name
+                try
+                {
+                    Console.WriteLine("Set name for " + fileinf.FullName + @"\" + directory.GetFileSystemInfos()[cursor]);
+                    string str = Console.ReadLine();
+                    string old_name = @"" + fileinf.FullName + @"\" + directory.GetFileSystemInfos()[cursor];//get the name of file
+                    string new_name = @"" + fileinf.FullName + @"\" + str;//get the adjusted name 
+                    Directory.Move(old_name, new_name);//changes the name
+                }
+
+                catch (Exception ex)
+                {
+                    Console.Write("Name cannot be same or empty");
+                    Console.ReadKey();
+                }
+
             }
             else
             {
@@ -221,9 +231,6 @@ namespace Ex1
             if (cursor == sz)//if it is in the end and down  arraw is pressed
                 cursor = 0;//it goes to the beginning
         }
-
-
-
         public void CalcSz()
         {
             directory = new DirectoryInfo(path);
@@ -234,7 +241,6 @@ namespace Ex1
                     if (fs[i].Name[0] == '.')
                         sz--;
         }
-
         public void Start() //main function to work with directories
         {
             ConsoleKeyInfo consoleKey = Console.ReadKey();
