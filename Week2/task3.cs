@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Task3
 {
     class Program
@@ -12,10 +11,9 @@ namespace Task3
         static void Main(string[] args) //we need a main method from where a runtime state the execution
         {
             F3(); //call the function
+          
         }
-
-        private static void PrintInfo(FileSystemInfo fsi, int k)
-
+        private static void PrintInfo(FileSystemInfo  fsi, int k)
         {
             string line = new string(' ', k); //is needed for putting space before into-folders
             line = line + fsi.Name; // line is equal to spaces written according to level of folder and its name

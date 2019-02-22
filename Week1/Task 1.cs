@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace array 
+namespace array
 {
     class Program
     {
         static void Main(string[] args) //function to print prime numbers and its  count
         {
+           
             int mm = 0; //counter of prime numbers in an array
-            int n = Convert.ToInt32( Console.ReadLine()); //converts string to integer and reads input(number of elements in an array)
+            int n = Convert.ToInt32(Console.ReadLine()); //converts string to integer and reads input(number of elements in an array)
             string[] arr = Console.ReadLine().Split(); //reads as an elements of an array splitted by the space
             for (int i = 0; i < n; i++) //get each value of the array
             {
@@ -19,7 +20,7 @@ namespace array
                 for (int j = 2; j <= int.Parse(arr[i]); j++)  //second array is called until the each element of array that is converted from string to int
                 {
                     if (int.Parse(arr[i]) % j == 0) //it recognises whether the dividers of the number is only one or no
-                    {   
+                    {
                         m++; // if divider of an element is only one, then it counts
                     }
                 }
@@ -54,10 +55,9 @@ namespace array
 
             }
 
-                    Console.ReadKey(); //halt the program execution until pressing key
+            Console.ReadKey(); //halt the program execution until pressing key
 
-           
+
         }
     }
 }
- 
